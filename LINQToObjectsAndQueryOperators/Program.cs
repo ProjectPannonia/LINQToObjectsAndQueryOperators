@@ -16,8 +16,9 @@ namespace LINQToObjectsAndQueryOperators
             um.FemaleStudents();
             um.SortStudentsByAge();
             um.AllStudentsFromBejingTech();
+            um.StudentAndUniversityNameCollection();
             //um.GetAllStudentsByUniversityId();
-
+            /*
             int[] someInt = { 30, 12, 4, 3, 12 };
             IEnumerable<int> sortedInts = from i in someInt orderby i select i;
             IEnumerable<int> reversedInts = sortedInts.Reverse();
@@ -32,6 +33,7 @@ namespace LINQToObjectsAndQueryOperators
             {
                 Console.WriteLine(i);
             }
+            */
             Console.ReadKey();
         }
     }
@@ -134,6 +136,20 @@ namespace LINQToObjectsAndQueryOperators
                 Console.WriteLine("Incorrect input!");
                 
                 GetAllStudentsByUniversityId();
+            }
+        }
+
+        public void StudentAndUniversityNameCollection()
+        {
+            var newCollection = from student in students
+                                join university in universities on student.UniversityId equals university.Id
+                                orderby student.Name
+                                select new { StudentName = student.Name, UniversityName = university.Name };
+            Console.WriteLine("New Collection: ");
+
+            foreach(var col in newCollection)
+            {
+                Console.WriteLine("Student {0} from University {1}", col.StudentName, col.UniversityName);
             }
         }
     }
